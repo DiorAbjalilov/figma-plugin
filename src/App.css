@@ -1,29 +1,6 @@
-.app {
+.App {
   position: relative;
-  width: 90%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  border: 1px solid red;
-  margin: auto;
-  gap: 5px;
-}
-.icon {
-  position: relative;
-  display: flex;
-  width: 320px;
-  border: 1px solid black;
-  padding: 5px;
-  justify-content: space-between;
-  align-items: center;
-}
-.btns {
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin: 15px 0;
-  gap: 5px;
-}
-button {
-  cursor: pointer;
+  justify-content: space-between;
 }
