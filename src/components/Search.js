@@ -15,7 +15,7 @@ const Search = () => {
     try {
       const res = await axios.get(api + "folders");
       const { data } = await res;
-      data && setFolder(data);
+      data && setFolder(data.filter((item) => item !== ".DS_Store"));
     } catch (error) {
       console.log(error);
     }
@@ -68,6 +68,7 @@ const Search = () => {
   return (
     <>
       <div className="search">
+        Delete icon
         <div className="searchInput">
           <Form.Select onChange={(e) => getCategory(e.target.value)}>
             <option>Default select</option>
