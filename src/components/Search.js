@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { api } from "../App";
+import LoadingSpin from "react-loading-spin";
 import "./style.css";
 const Search = () => {
   const [folder, setFolder] = useState([]);
@@ -9,6 +10,7 @@ const Search = () => {
   const [category, setCategory] = useState([]);
   const [icons, setIcons] = useState([]);
   const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const getFolder = async () => {
     try {
       const res = await axios.get(api + "folders");
@@ -20,8 +22,9 @@ const Search = () => {
   };
   const getCategory = async (folder) => {
     try {
-      //   console.log(folder);
-      setFolderOne(folder);
+      setFolderOne((prev) => folder);
+      setIcons([]);
+      setCategory([]);
       const res = await axios.get(api + "category?folder=" + folder);
       const { data } = await res;
       data && setCategory(data.filter((i) => i !== ".DS_Store"));
@@ -31,11 +34,13 @@ const Search = () => {
   };
   const getIcons = async (folder, category) => {
     try {
+      setLoading(true);
       const res = await axios.get(
         api + "icons?folder=" + folder + "&category=" + category
       );
       const { data } = await res;
       data && setIcons(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -81,21 +86,25 @@ const Search = () => {
           <div className="icons">
             {icons.length === 0 ? (
               <p>no item</p>
+            ) : loading ? (
+              <LoadingSpin />
             ) : (
-              icons.map((item, index) => {
-                return (
-                  <div className="icon" key={index}>
-                    <img src={api + "static/" + item.path} />
-                    <p>{item.name}</p>
-                    <Button
-                      variant="danger"
-                      onClick={() => deleteIcon(item.path)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                );
-              })
+              <>
+                {icons.map((item, index) => {
+                  return (
+                    <div className="icon" key={index}>
+                      <img src={api + "static/" + item.path} />
+                      <p>{item.name}</p>
+                      <Button
+                        variant="danger"
+                        onClick={() => deleteIcon(item.path)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  );
+                })}
+              </>
             )}
           </div>
         </div>
