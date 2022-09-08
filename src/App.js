@@ -1,7 +1,7 @@
 import "./App.css";
 import Search from "./components/Search";
 import AddNewIcon from "./components/AddNewIcon";
-export const api = "https://figma-plugin.herokuapp.com/";
+export const api = "https://hugeicon-back.herokuapp.com/";
 
 function App() {
   return (
